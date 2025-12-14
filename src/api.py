@@ -1,4 +1,5 @@
 from __future__ import annotations
+import uuid
 
 
 """
@@ -292,15 +293,19 @@ def predict(req: PredictRequest) -> dict[str, Any]:
     latency_ms = (time.perf_counter() - start) * 1000.0
 
 
+   # Generate a request_id if the client did not provide one
+    request_id = req.request_id or str(uuid.uuid4())
+
     out: dict[str, Any] = {
-        "request_id": req.request_id,
-        "model_version": model_name,
-        "prediction": pred,
-        "probability": round(proba, 6),
-        "latency_ms": round(latency_ms, 3),
-        "features": features,
-        "ts": int(time.time()),
+    "request_id": request_id,
+    "model_version": model_name,
+    "prediction": pred,
+    "probability": round(proba, 6),
+    "latency_ms": round(latency_ms, 3),
+    "features": features,
+    "ts": int(time.time()),
     }
+
 
 
     log_prediction(out)
