@@ -1,4 +1,0 @@
-[core]
-    remote = localremote
-['remote "localremote"']
-    url = C:\Users\Hiba\mlops-lab-01\dvc_storage
